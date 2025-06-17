@@ -18,6 +18,10 @@ export async function handleCompletion(c: Context) {
   await checkRateLimit(state)
 
   let payload = await c.req.json<ChatCompletionsPayload>()
+  for (const message of payload.messages) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (message.content === undefined) message.content = ""
+  }
   consola.debug("Request payload:", JSON.stringify(payload))
 
   consola.info("Current token count:", getTokenCount(payload.messages))
