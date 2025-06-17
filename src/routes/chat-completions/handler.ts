@@ -18,6 +18,10 @@ export async function handleCompletion(c: Context) {
   await checkRateLimit(state)
 
   let payload = await c.req.json<ChatCompletionsPayload>()
+  for (const message of payload.messages) {
+    if (isNullish((message as { content?: unknown }).content))
+      (message as { content?: string }).content = ""
+  }
   consola.debug("Request payload:", JSON.stringify(payload))
 
   consola.info("Current token count:", getTokenCount(payload.messages))
