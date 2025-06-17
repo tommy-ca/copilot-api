@@ -2,8 +2,18 @@ import { countTokens } from "gpt-tokenizer/model/gpt-4o"
 
 import type { Message } from "~/services/copilot/create-chat-completions"
 
+import { isNullish } from "./is-nullish"
+
 export const getTokenCount = (messages: Array<Message>) => {
-  const simplifiedMessages = messages.map((message) => {
+  const sanitized = messages.map((message) => ({
+    ...message,
+    content:
+      isNullish((message as { content?: unknown }).content) ? "" : (
+        message.content
+      ),
+  }))
+
+  const simplifiedMessages = sanitized.map((message) => {
     let content = ""
     if (typeof message.content === "string") {
       content = message.content
