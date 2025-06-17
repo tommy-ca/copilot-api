@@ -20,6 +20,10 @@ export async function handleCompletion(c: Context) {
   let payload = await c.req.json<ChatCompletionsPayload>()
   consola.debug("Request payload:", JSON.stringify(payload))
 
+  for (const m of payload.messages) {
+    if (!Object.hasOwn(m, "content")) (m as { content: string }).content = ""
+  }
+
   consola.info("Current token count:", getTokenCount(payload.messages))
 
   if (state.manualApprove) await awaitApproval()

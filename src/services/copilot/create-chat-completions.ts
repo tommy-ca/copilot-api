@@ -10,6 +10,8 @@ export const createChatCompletions = async (
   if (!state.copilotToken) throw new Error("Copilot token not found")
 
   for (const message of payload.messages) {
+    if (!Object.hasOwn(message, "content"))
+      (message as { content: string }).content = ""
     intoCopilotMessage(message)
   }
 
