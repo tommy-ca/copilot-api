@@ -9,6 +9,8 @@ This project is a reverse-engineered implementation of the GitHub Copilot API cr
 
 A wrapper around GitHub Copilot API to make it OpenAI compatible, making it usable for other tools like AI assistants, local interfaces, and development utilities.
 
+Additional documentation describing the product requirements, architecture and system design can be found under [`docs/`](docs/). A modular Rust implementation of the gateway lives in [`rust-gateway/`](rust-gateway/).
+
 ## Demo
 
 https://github.com/user-attachments/assets/7654b383-669d-4eb9-b23c-06d7aefee8c5
