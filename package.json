@@ -19,13 +19,19 @@
     "copilot-api": "./dist/main.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "native/target/release/*.node"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "bun run --watch ./src/main.ts",
+    "build": "bun run build:native && bun tsup",
+    "build:native": "cd native && cargo build --release",
+    "dev": "bun run build:native && bun run --watch ./src/main.ts",
+    "dev:native": "cd native && cargo build",
     "knip": "knip-bun",
     "lint": "eslint .",
+    "lint:rust": "cd native && cargo clippy",
+    "test": "npm run test:native && bun test",
+    "test:native": "cd native && cargo test",
     "prepack": "bun run build",
     "prepare": "simple-git-hooks",
     "release": "bumpp && bun publish --access public",
@@ -58,5 +64,9 @@
     "simple-git-hooks": "^2.13.0",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3"
+  },
+  "neon": {
+    "type": "library",
+    "org": "copilot-api"
   }
 }
