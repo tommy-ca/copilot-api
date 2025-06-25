@@ -2,7 +2,7 @@ import { countTokens } from "gpt-tokenizer/model/gpt-4o"
 
 import type { Message } from "~/services/copilot/create-chat-completions"
 
-import { isNullish } from "./is-nullish"
+import { isNullish } from "./utils"
 
 export const getTokenCount = (messages: Array<Message>) => {
   const sanitized = messages.map((message) => ({
