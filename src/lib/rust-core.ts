@@ -69,19 +69,53 @@ export const rustCore = {
     }
   },
 
-  async checkRateLimit(key: string, intervalSecs: number): Promise<boolean> {
+  async checkRateLimit(key: string, intervalSecs: number, burstCapacity: number = 5): Promise<boolean> {
     const timer = PerformanceMonitor.startTimer('rust_rate_limit')
     
     try {
       const native = loadNativeModule()
       if (!native) throw new Error('Native module not available')
       
-      const result = native.checkRateLimit(key, intervalSecs)
+      const result = native.checkRateLimit(key, intervalSecs, burstCapacity)
       timer?.end()
       return result
     } catch (error) {
       timer?.end()
       console.warn('Rust rate limiter failed, falling back to JS:', error)
+      throw error
+    }
+  },
+
+  async getRateLimitStats(): Promise<{activeLimiters: number}> {
+    const timer = PerformanceMonitor.startTimer('rust_rate_limit_stats')
+    
+    try {
+      const native = loadNativeModule()
+      if (!native) throw new Error('Native module not available')
+      
+      const result = native.getRateLimitStats()
+      timer?.end()
+      return result
+    } catch (error) {
+      timer?.end()
+      console.warn('Rust rate limit stats failed:', error)
+      throw error
+    }
+  },
+
+  async resetRateLimit(key: string): Promise<boolean> {
+    const timer = PerformanceMonitor.startTimer('rust_rate_limit_reset')
+    
+    try {
+      const native = loadNativeModule()
+      if (!native) throw new Error('Native module not available')
+      
+      const result = native.resetRateLimit(key)
+      timer?.end()
+      return result
+    } catch (error) {
+      timer?.end()
+      console.warn('Rust rate limit reset failed:', error)
       throw error
     }
   },
@@ -99,6 +133,23 @@ export const rustCore = {
     } catch (error) {
       timer?.end()
       console.warn('Rust validation failed, falling back to JS:', error)
+      throw error
+    }
+  },
+
+  async validatePayloadDetailed(payload: any): Promise<{valid: boolean, error?: string, contentType?: string}> {
+    const timer = PerformanceMonitor.startTimer('rust_validation_detailed')
+    
+    try {
+      const native = loadNativeModule()
+      if (!native) throw new Error('Native module not available')
+      
+      const result = native.validatePayloadDetailed(JSON.stringify(payload))
+      timer?.end()
+      return result
+    } catch (error) {
+      timer?.end()
+      console.warn('Rust detailed validation failed:', error)
       throw error
     }
   },

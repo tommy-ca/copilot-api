@@ -1,11 +1,16 @@
 {
   "name": "copilot-api",
   "version": "0.5.1",
-  "description": "Turn GitHub Copilot into OpenAI/Anthropic API compatible server. Usable with Claude Code!",
+  "description": "High-performance GitHub Copilot proxy with OpenAI/Anthropic API compatibility. Hybrid Node.js + Rust architecture for maximum speed. Usable with Claude Code!",
   "keywords": [
     "proxy",
     "github-copilot",
-    "openai-compatible"
+    "openai-compatible",
+    "anthropic-compatible",
+    "rust",
+    "performance",
+    "hybrid-architecture",
+    "claude-code"
   ],
   "homepage": "https://github.com/ericc-ch/copilot-api",
   "bugs": "https://github.com/ericc-ch/copilot-api/issues",

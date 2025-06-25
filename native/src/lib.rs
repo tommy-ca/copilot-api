@@ -20,7 +20,10 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
     
     // Rate limiting and validation
     cx.export_function("checkRateLimit", utils::rate_limit::check_rate_limit)?;
+    cx.export_function("getRateLimitStats", utils::rate_limit::get_rate_limit_stats)?;
+    cx.export_function("resetRateLimit", utils::rate_limit::reset_rate_limit)?;
     cx.export_function("validatePayload", utils::validation::validate_payload)?;
+    cx.export_function("validatePayloadDetailed", utils::validation::validate_payload_detailed)?;
     
     Ok(())
 }
